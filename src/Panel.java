@@ -15,18 +15,23 @@ import javax.swing.JPanel;
 
 //FIELD PANEL: panel para doon sa field/grass part
 public class Panel extends JPanel implements ActionListener {
-
+	BattleField field = new BattleField();
+	Player player1 = new Player("Mary", 50,50,field);	//example lang: instance of a player
+	Player player2 = new Player("Ayel", 50,50,field);	//example lang: instance of a player
+	Player player3 = new Player("Zyrine", 50,50,field);	//example lang: instance of a player
+	
 	ActionPanel act_panel = new ActionPanel();
 	JPanel panel = new JPanel();
 	static JButton [][]buttons = new JButton[6][8];
 	JButton []troop_button = new JButton[6];
 	int [] button_index = new int[2];
 
+	public static String h = "HELLO";
 	public Panel(){
 		//-------------------GUI-------------------------------//
 		for(int i =0; i<6;i++){
 			for(int j =0; j<8;j++){
-				buttons[i][j] = new JButton(new ImageIcon("images/grass.jpg"));
+				buttons[i][j] = new JButton(new ImageIcon("images/grass.png"));
 				buttons[i][j].setPreferredSize(new Dimension(80,80));
 				buttons[i][j].setBackground(Color.green);
 				buttons[i][j].addActionListener(this);
@@ -42,10 +47,6 @@ public class Panel extends JPanel implements ActionListener {
 	
 	@SuppressWarnings("deprecation")
 	public void actionPerformed(ActionEvent e) {
-		BattleField field = new BattleField();
-		final Player player1 = new Player("Mary", 50,50,field);	//example lang: instance of a player
-		final Player player2 = new Player("Ayel", 50,50,field);	//example lang: instance of a player
-		final Player player3 = new Player("Zyrine", 50,50,field);	//example lang: instance of a player
 		
 		for(int i =0;i<6;i++){
 			for(int j =0;j<6;j++){
@@ -78,6 +79,8 @@ public class Panel extends JPanel implements ActionListener {
 					button1.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent ae){
 							System.out.println("BUILD");
+							h = "nyahaha";
+							
 							//ActionPlayer.build(player1,button_index);
 							
 							String[] options = {"Army Camp", "Defense", "Resource"};
@@ -96,15 +99,15 @@ public class Panel extends JPanel implements ActionListener {
 									final JButton[] army = new JButton[3];
 									Component[] comp = new Component[3];
 									for(int z=0; z<3; z++){
-										Icon icn = new ImageIcon("images/structures/army camp/"+armynames[z]+".png");
+										Icon icn = new ImageIcon("images/structures/armycamp/"+armynames[z]+".png");
 										final int indexZ = z;
 										army[z] = new JButton("", icn);
 										army[z].setToolTipText(armynames[z]);
 										army[z].addActionListener(new ActionListener(){
 											public void actionPerformed(ActionEvent ae0){
-												Panel.buttons[indexI][indexJ].setIcon(new ImageIcon("images/structures/army camp/"+armynames[indexZ]+".png"));
-												
-												player1.field.changeField(player1, button_index, armynames[indexZ], "army camp");
+												Panel.buttons[indexI][indexJ].setIcon(new ImageIcon("images/structures/armycamp/"+armynames[indexZ]+".png"));
+												player1 = player1.field.setState(player1, indexZ);
+												player1 = player1.field.changeField(player1, button_index, armynames[indexZ], "armycamp");
 												for(int y=0; y<3; y++){
 													army[y].setEnabled(false);
 												}
@@ -136,7 +139,9 @@ public class Panel extends JPanel implements ActionListener {
 										defense[z].addActionListener(new ActionListener(){
 											public void actionPerformed(ActionEvent ae0){
 												Panel.buttons[indexI][indexJ].setIcon(new ImageIcon("images/structures/defense/"+defensenames[indexZ]+".png"));
-												player1.field.changeField(player1, button_index, defensenames[indexZ], "defense");
+												player1 = player1.field.setState(player1, indexZ+3);
+												
+												player1 = player1.field.changeField(player1, button_index, defensenames[indexZ], "defense");
 												
 												for(int y=0; y<8; y++){
 													defense[y].setEnabled(false);
@@ -162,10 +167,8 @@ public class Panel extends JPanel implements ActionListener {
 									resource.setToolTipText("gold storage");
 									resource.addActionListener(new ActionListener(){
 										public void actionPerformed(ActionEvent ae0){
-											
 											Panel.buttons[indexI][indexJ].setIcon(new ImageIcon("images/structures/resource/goldstorage1.png"));
-											player1.field.changeField(player1, button_index, "goldstorage1", "resource");
-											
+											player1 = player1.field.changeField(player1, button_index, "goldstorage1", "resource");
 											resource.setEnabled(false);
 										}
 									});
@@ -188,16 +191,31 @@ public class Panel extends JPanel implements ActionListener {
 					
 					button2.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent ae){
-							System.out.println("ATTACK");
+						
 							//ActionPlayer.attack(player2,player3);
 							//new EnemyCamp();
+							/*for(int i=0;i<6;i++){
+								for(int j =0;j<8;j++){
+									System.out.println(player1.field.state_buttons[i][j]);
+								}
+							}*/
+							UDPClient c = new UDPClient();
+							try {
+								c.receivePlayer(player1);
+								c.try1();
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								System.out.println("ERROR");
+								e.printStackTrace();
+							}
 							
-							JFrame opponents = new JFrame("ENEMY CAMPS");
+							/*JFrame opponents = new JFrame("ENEMY CAMPS");
 							opponents.setAlwaysOnTop(true);
 							opponents.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 							opponents.setVisible(true);
 							opponents.setPreferredSize(new Dimension(500,500));
-							opponents.pack();
+							opponents.pack();*/
+							
 							
 						}
 					});
@@ -205,6 +223,7 @@ public class Panel extends JPanel implements ActionListener {
 					button3.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent ae){
 							System.out.println("UPGRADE");
+							System.out.println(UDPServer.sentence2);
 							System.out.println(player1.field.state_buttons[button_index[0]][button_index[1]]);
 							String [] struct_temp = player1.field.state_buttons[button_index[0]][button_index[1]].split("[0-9]");
 							String [] temp = player1.field.state_buttons[button_index[0]][button_index[1]].split("");

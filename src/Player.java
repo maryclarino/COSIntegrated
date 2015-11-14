@@ -4,6 +4,7 @@ public class Player {
 	String name;
 	int coins = 50, experience = 50, level = 0;
 	BattleField field;
+	
 	public Player(String name, int coins, int experience, BattleField field){
 		this.name = name;
 		this.coins = coins;
@@ -11,6 +12,9 @@ public class Player {
 		this.field = field;
 	}
 	
+	public String getName(){
+		return name;
+	}
 	
 	
 }

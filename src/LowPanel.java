@@ -1,15 +1,19 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
-public class LowPanel extends JPanel {
+public class LowPanel extends JPanel implements ActionListener{
 	JPanel panel = new JPanel();
 	JButton [] troop_button = new JButton[6];
 	String [] image_path = new String[6];
+	String[][] state = new String[6][8];
+	int index_troop;
 	public LowPanel(){
 		
 			image_path[0] = new String("images/troops/barbarian2.png");
@@ -25,6 +29,7 @@ public class LowPanel extends JPanel {
 			troop_button[i] = new JButton(new ImageIcon(image_path[i]));
 			troop_button[i].setPreferredSize(new Dimension(100,80));
 			troop_button[i].setBackground(Color.black);
+			troop_button[i].addActionListener(this);
 			panel.add(troop_button[i]);
 		}
 		
@@ -33,4 +38,17 @@ public class LowPanel extends JPanel {
 		panel.setVisible(true);
 		this.add(panel);
 	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		for(int i =0; i<6;i++){
+			if(e.getSource() == troop_button[i]){	//i = index of troop
+					Attack.eval(i);
+			}
+		}
+	}
+		
+	//end of function
+	
+	
+	
 }
