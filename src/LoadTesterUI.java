@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 
 
 public class LoadTesterUI extends JPanel implements ActionListener {
-	JButton send_v = new JButton("SEND VALID");
-	JButton send_i = new JButton("SEND INVALID");
+	JButton send_v = new JButton("SEND!!!");
+	//JButton send_i = new JButton("SEND INVALID");
 	LoadTesterClient c = new LoadTesterClient();
 	JPanel p = new JPanel();
 	static String []invalid = {"grass grass", "HDGSADGAJGHJA", "HELLO THERE!", "grass grass grass grass", "NYAHAHAHA!", "NYAHAHAHA!"};
@@ -39,10 +39,10 @@ public class LoadTesterUI extends JPanel implements ActionListener {
 		}
 		
 		send_v.addActionListener(this);
-		send_i.addActionListener(this);
+	//	send_i.addActionListener(this);
 		p.setPreferredSize(new Dimension(300,300));
 		p.add(send_v);
-		p.add(send_i);
+	//	p.add(send_i);
 		this.add(p);
 	}
 	@Override
@@ -59,7 +59,7 @@ public class LoadTesterUI extends JPanel implements ActionListener {
 			}
 		}//end of if send_v
 		
-		if(e.getSource() == send_i){
+	/*	if(e.getSource() == send_i){
 			 random_num = (int) (Math.random() * ( 4 - 0 ));
 			
 			try {
@@ -69,7 +69,7 @@ public class LoadTesterUI extends JPanel implements ActionListener {
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-		}
+		}*/
 		
 	}
 	

@@ -48,12 +48,9 @@ public static void runWindow(){
 		state_text = text.getText().split(" ");
 		for(int i =0; i<state_text.length; i++){
 			if(i-1>=0){
-				//System.out.print("["+((i-1)/8)+"]");
-				//System.out.print("["+((i-1)%8)+"]");
 				field.buttons[(i-1)/8][(i-1)%8].setIcon(new ImageIcon("images/"+state_text[i]+".png"));
 				ActualState[(i-1)/8][(i-1)%8] = state_text[i];
 			}
-			//System.out.println(state_text[i]);
 		}
 		for(int i=0; i<6;i++){
 				field.buttons[i][7].setIcon(new ImageIcon("images/grass.png"));

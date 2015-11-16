@@ -1,6 +1,5 @@
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -45,35 +44,26 @@ public static void eval(int i){
 	Icon struct_icon = UDPServer.field.buttons[index[0]][index[1]].getIcon();
 	
 	cnt = 0;
+	JOptionPane.showMessageDialog(null, "BATTLE ON GOING...");
 	while(troop_life>0 || struct_life >0){
 		struct_life = Attack.AttackStruct(struct_life, troop_attack);
 		troop_life = Attack.AttackTroop(troop_life, struct_attack);
-		if(cnt%2 == 0){
-			System.out.println("TROOP!!!");
-			UDPServer.field.buttons[index[0]][index[1]].setIcon(new ImageIcon(p.image_path[troop_index]));
-			
-		}
-		else{
-			System.out.println("STRUCT!!!");
-			UDPServer.field.buttons[index[0]][index[1]].setIcon(struct_icon);
-			
-		}
 		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(50);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		cnt++;
 	}
 	if(troop_life>struct_life){
-		System.out.println("TROOP SURVIVES");
+		JOptionPane.showMessageDialog(null, "TROOP SURVIVES!!!");
 		state[index[0]][index[1]] = "grass";
 		UDPServer.field.buttons[index[0]][index[1]].setIcon(new ImageIcon("images/grass.png"));
 		
 	}
 	else{
-		System.out.println("STRUCT SURVIVES");
+		JOptionPane.showMessageDialog(null, "STRUCTURE SURVIVES!!!");
 		UDPServer.field.buttons[index[0]][index[1]].setIcon(struct_icon);
 		
 		
@@ -91,7 +81,6 @@ public static int init(){
 		struct_attack = BattleField.struct_attack_span[index[2]];
 		return 0;
 	}
-	
 }
 
 public static int[] select_struct(String[][]state){

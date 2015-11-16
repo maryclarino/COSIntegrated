@@ -5,7 +5,7 @@ import java.net.*;
 	public void try1() throws Exception    {
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));       
 		DatagramSocket clientSocket = new DatagramSocket();
-		InetAddress IPAddress = InetAddress.getByName("localhost");       
+		InetAddress IPAddress = InetAddress.getByName("192.168.10.3");       
 		byte[] sendData = new byte[1024];
 		byte[] receiveData = new byte[1024]; 
 		//String sentence = inFromUser.readLine(); 
