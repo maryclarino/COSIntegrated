@@ -8,9 +8,11 @@ import javax.swing.Icon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
 
 public class MainWindow extends JFrame {
 	//static Panel panel = new Panel();			//panel of the field
+	public static JPanel p= new JPanel();
 	static Panel panel = new Panel();			//panel of the field
 	static LowPanel low_panel = new LowPanel();	//panel of the troop
 	public static StatPanel stats_panel = new StatPanel();	//panel of the stat
@@ -21,7 +23,8 @@ public class MainWindow extends JFrame {
 	public static JInternalFrame stats = new JInternalFrame("STATS", true,true,true,true);
 	
 	public static void main(String[]args) throws IOException{
-		//-----------------------------------GUI--------------------------------------------
+		//-----------------------------------GUI----------------------------------//
+		
 		JFrame frame = new JFrame("COMBAT OF SOLITARY");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -59,10 +62,14 @@ public class MainWindow extends JFrame {
 		stats.setBounds(70, 70, 300, 200);
 		stats.setLocation(0,0);
 		
+		p.setVisible(true);
+		p.setPreferredSize(new Dimension(1010,720));
+		p.setBackground(Color.black);
 		desktop.add(field);
 		desktop.add(troop);
 		desktop.add(stats);
 		desktop.add(chat);
+		//p.add(desktop);
 		frame.add(desktop);
 		frame.setPreferredSize(new Dimension(1010, 720));
 		frame.setVisible(true);

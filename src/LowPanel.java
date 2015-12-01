@@ -40,9 +40,14 @@ public class LowPanel extends JPanel implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
 		for(int i =0; i<6;i++){
 			if(e.getSource() == troop_button[i]){	//i = index of troop
+			//		troop_button[i].setEnabled(false);
 					Attack.eval(i);
+					
+					
+					
 			}
 		}
 	}

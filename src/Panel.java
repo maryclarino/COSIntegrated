@@ -25,8 +25,48 @@ public class Panel extends JPanel implements ActionListener {
 	static JButton [][]buttons = new JButton[6][8];
 	JButton []troop_button = new JButton[6];
 	int [] button_index = new int[2];
-
+	public static String[][]actual_state = new String[6][8];
 	public static String h = "HELLO";
+	public static String []state_text;
+	public static String update_sentence;
+	public static void getSentence(String sentence2){
+		update_sentence = sentence2;
+		update_buttons(update_sentence);
+	}
+	public static void update_buttons(String sentence2){
+		int cnt=0;
+		 state_text = sentence2.split(" ");
+
+			for(int i =0; i<state_text.length; i++){
+				//System.out.println(state_text[i]+" \n");
+				if(i-1>=0){
+					if((((i-1)/8)<=5) && ((i-1)%8)<=7){
+					System.out.println((i-1)/8+" "+(i-1)%8+state_text[i]);
+					actual_state[(i-1)/8][(i-1)%8] = state_text[i];
+					if(state_text[i].equals("grass")){
+						cnt++;
+					}
+					}
+				}
+			}
+			if(cnt==42){
+				JOptionPane.showMessageDialog(null, "SORRY!!! YOU LOSE!!!");
+				
+			}
+			changeButtons();
+			
+	}//end of update_buttons
+	
+	public static void changeButtons(){
+		for(int i=0;i<6;i++){
+			for(int j=0;j<8;j++){
+				System.out.println(actual_state[i][j]);
+				//Panel.buttons[i][j].setIcon(null);
+			}
+		}
+	}
+
+
 	public Panel(){
 		//-------------------GUI-------------------------------//
 		for(int i =0; i<6;i++){
@@ -49,7 +89,7 @@ public class Panel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		for(int i =0;i<6;i++){
-			for(int j =0;j<6;j++){
+			for(int j =0;j<8;j++){
 				if(e.getSource() == buttons[i][j]){ 
 					//store sa array iyong index para malaman anong button inaccess
 					button_index[0] = i;
@@ -199,7 +239,7 @@ public class Panel extends JPanel implements ActionListener {
 									System.out.println(player1.field.state_buttons[i][j]);
 								}
 							}*/
-							UDPClient c = new UDPClient();
+							UDPServer c = new UDPServer();
 							try {
 								c.receivePlayer(player1);
 								c.try1();
@@ -222,7 +262,8 @@ public class Panel extends JPanel implements ActionListener {
 
 					button3.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent ae){
-							System.out.println("UPGRADE");
+							changeButtons();
+							/*System.out.println("UPGRADE");
 							System.out.println(UDPServer.sentence2);
 							System.out.println(player1.field.state_buttons[button_index[0]][button_index[1]]);
 							String [] struct_temp = player1.field.state_buttons[button_index[0]][button_index[1]].split("[0-9]");
@@ -239,7 +280,7 @@ public class Panel extends JPanel implements ActionListener {
 								}
 								
 								
-							}
+							}*/
 							
 									
 						}

@@ -5,7 +5,7 @@ import java.net.*;
 	public void tester(String state) throws Exception    {
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));       
 		DatagramSocket clientSocket = new DatagramSocket();
-		InetAddress IPAddress = InetAddress.getByName("192.168.10.3");       
+		InetAddress IPAddress = InetAddress.getByName("192.168.10.7");       
 		byte[] sendData = new byte[1024];
 		byte[] receiveData = new byte[1024]; 
 		sendData = state.getBytes();

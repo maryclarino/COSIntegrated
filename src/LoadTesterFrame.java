@@ -2,7 +2,6 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
-
 public class LoadTesterFrame extends JFrame {
 	static LoadTesterUI ui = new LoadTesterUI();
 	static JFrame frame = new JFrame();

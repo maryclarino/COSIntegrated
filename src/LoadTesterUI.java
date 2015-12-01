@@ -23,7 +23,7 @@ public class LoadTesterUI extends JPanel implements ActionListener {
 	public LoadTesterUI(){
 		String state = "";
 		for(int k = 0; k<5; k++){
-			state = "";
+			state = "T_";
 			for(int i=0;i<6;i++){
 				for(int j=0;j<8;j++){
 						if(j%2 == 0){

@@ -1,11 +1,50 @@
+import java.awt.Dimension;
+import java.awt.TextArea;
 import java.io.*;
 import java.net.*;
- class UDPClient { 
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+public class UDPClient extends JFrame { 
 	 static Player player;
+	 public static Panel field;
+	 public static String [][] ActualState = new String[6][8];	//parse text
+	 static String sentence2;
+	 public static TextArea text = new TextArea();
+	 public static JFrame frame = new JFrame();
+	 public static LowPanel troop = new LowPanel();
+	 
+	 
+	 public static void main(String[]args) throws IOException{
+		 	DatagramSocket serverSocket = new DatagramSocket(9876);         
+		    byte[] receiveData = new byte[1024];             
+			byte[] sendData = new byte[1024];
+			while(true){
+			DatagramPacket receivePacket = new DatagramPacket(receiveData,receiveData.length);
+			serverSocket.receive(receivePacket);
+			sentence2= new String( receivePacket.getData());
+			InetAddress IPAddress = receivePacket.getAddress();
+			int port = receivePacket.getPort();
+			String capitalizedSentence = sentence2.toUpperCase();
+			sendData = capitalizedSentence.getBytes();       
+			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);                   
+			serverSocket.send(sendPacket); 
+			System.out.println("RECEIVED BY USER: " + sentence2);
+			Panel.update_buttons(sentence2);
+				
+			}//end of while loop
+			
+	 }//end of main function
+	 
+	 
 	public void try1() throws Exception    {
+		
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));       
 		DatagramSocket clientSocket = new DatagramSocket();
-		InetAddress IPAddress = InetAddress.getByName("192.168.10.3");       
+		InetAddress IPAddress = InetAddress.getByName("192.168.10.7");//MainWindow.stats_panel.server_text.getText());       
 		byte[] sendData = new byte[1024];
 		byte[] receiveData = new byte[1024]; 
 		//String sentence = inFromUser.readLine(); 
@@ -30,13 +69,10 @@ import java.net.*;
 		sendData = state.getBytes();
 		DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);  
 		clientSocket.send(sendPacket); 
-		DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);    
-		clientSocket.receive(receivePacket);    
-		String modifiedSentence = new String(receivePacket.getData());    
-		//clientSocket.close();
-		} 
+		
+	}//end of try1 function
+	
 	public void receivePlayer(Player player1){
 		player = player1;
-		
-	}
+	}//end of receivePlayer
 } 
